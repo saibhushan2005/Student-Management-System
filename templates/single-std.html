@@ -1,0 +1,140 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Details</title>
+
+    <style>
+        * {
+            margin: 0;                                                   
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        h3 {
+            color: white;
+            font-size: 28px;
+            margin-bottom: 25px;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        .card {
+            width: 320px;
+            min-height: 440px;
+            background: white;
+            border-radius: 18px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+            transition: 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 18px 40px rgba(0,0,0,0.3);
+        }
+
+        .card img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #667eea;
+            margin-bottom: 18px;
+        }
+
+        .card p {
+            text-align: left;
+            font-size: 16px;
+            color: #444;
+            margin: 13px 0;
+            padding: 8px 12px;
+            background: #f5f6fa;
+            border-radius: 7px;
+        }
+
+        .card p span {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .status {
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: bold;
+            color: white;
+            margin: 15px 0;
+        }
+
+        .present {
+            background: #16a34a;
+        }
+
+        .absent {
+            background: #dc2626;
+        }
+
+        .home-btn {
+            display: inline-block;
+            text-decoration: none;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 11px 30px;
+            border-radius: 25px;
+            font-weight: bold;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        .home-btn:hover {
+            background: #333;
+            transform: scale(1.05);
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <h3>🎓 Student Details</h3>
+
+    <div class="card">
+
+        <img src="{{std[6]}}" alt="Student Image">
+
+        <p><span>Name:</span> {{std[1]}}</p>
+        <p><span>Age:</span> {{std[2]}}</p>
+        <p><span>Gender:</span> {{std[3]}}</p>
+        <p><span>Marks:</span> {{std[4]}}</p>
+        <p><span>Course:</span> {{std[5]}}</p>
+
+        {% if std[7] %}
+            <button class="status present">✓ Present</button>
+        {% else %}
+            <button class="status absent">✕ Absent</button>
+        {% endif %}
+
+        <br>
+
+        <a href="/" class="home-btn">← Back to Home</a>
+
+    </div>
+
+</body>
+</html>

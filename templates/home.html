@@ -1,0 +1,352 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management System</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            min-height: 100vh;
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 25px;
+        }
+
+        /* Dashboard */
+        .dashboard {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .total-card {
+            width: 180px;
+            height: 70px;
+            background: white;
+            border-radius: 10px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #333;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .total-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .total-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .total-content p {
+            color: #666;
+            font-size: 10px;
+            font-weight: bold;
+            margin-bottom: 3px;
+        }
+
+        .total-content h2 {
+            font-size: 22px;
+        }
+
+        .total-line {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+        }
+
+        /* Total */
+        .all .total-icon {
+            background: #ede9fe;
+        }
+
+        .all h2 {
+            color: #7c3aed;
+        }
+
+        .all .total-line {
+            background: #7c3aed;
+        }
+
+        /* Present */
+        .present .total-icon {
+            background: #dcfce7;
+        }
+
+        .present h2 {
+            color: #16a34a;
+        }
+
+        .present .total-line {
+            background: #16a34a;
+        }
+
+        /* Absent */
+        .absent .total-icon {
+            background: #fee2e2;
+        }
+
+        .absent h2 {
+            color: #dc2626;
+        }
+
+        .absent .total-line {
+            background: #dc2626;
+        }
+
+        /* Add Student */
+        .add-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .add-btn {
+            display: inline-block;
+            background: #16a34a;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 7px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .add-btn:hover {
+            background: #15803d;
+        }
+
+        /* Student Cards */
+        .student-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+            width: 250px;
+            min-height: 380px;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            background: #f3f4f6;
+            padding: 8px;
+            margin: 7px 0;
+            border-radius: 5px;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        .present-text {
+            color: #16a34a;
+        }
+
+        .absent-text {
+            color: #dc2626;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .buttons a,
+        .buttons button {
+            border: none;
+            padding: 8px 10px;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .view-btn {
+            background: #2563eb;
+        }
+
+        .update-btn {
+            background: #e99920;
+        }
+
+        .delete-btn {
+            background: #dc2626;
+        }
+
+        .buttons form {
+            display: inline;
+        }
+
+        .empty {
+            text-align: center;
+            color: white;
+            font-size: 18px;
+            margin-top: 30px;
+            width: 100%;
+        }
+
+        @media(max-width: 600px) {
+            body {
+                padding: 15px;
+            }
+
+            .total-card {
+                width: 165px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>🎓Student Management System</h1>
+
+    <!-- Dashboard -->
+    <div class="dashboard">
+
+        <a href="/" class="total-card all">
+            <div class="total-icon">👨‍🎓</div>
+            <div class="total-content">
+                <p>TOTAL STUDENTS</p>
+                <h2>{{ total }}</h2>
+            </div>
+            <div class="total-line"></div>
+        </a>
+
+        <a href="/students/present" class="total-card present">
+            <div class="total-icon">✅</div>
+            <div class="total-content">
+                <p>PRESENT STUDENTS</p>
+                <h2>{{ present }}</h2>
+            </div>
+            <div class="total-line"></div>
+        </a>
+
+        <a href="/students/absent" class="total-card absent">
+            <div class="total-icon">❌</div>
+            <div class="total-content">
+                <p>ABSENT STUDENTS</p>
+                <h2>{{ absent }}</h2>
+            </div>
+            <div class="total-line"></div>
+        </a>
+
+    </div>
+
+    <!-- Add Student -->
+    <div class="add-container">
+        <a href="/students/add" class="add-btn">
+            + Add New Student
+        </a>
+    </div>
+
+    <!-- Student Details -->
+    <div class="student-container">
+
+        {% for std in stds %}
+
+        <div class="card">
+
+            <img src="{{ std[6] }}" alt="Student Image">
+
+            <p><b>Name:</b> {{ std[1] }}</p>
+            <p><b>Age:</b> {{ std[2] }}</p>
+            <p><b>Gender:</b> {{ std[3] }}</p>
+            <p><b>Marks:</b> {{ std[4] }}</p>
+            <p><b>Course:</b> {{ std[5] }}</p>
+
+            <p>
+                <b>Status:</b>
+
+                {% if std[7]|string|trim in ['1', 'Present'] %}
+                    <span class="present-text">Present</span>
+                {% else %}
+                    <span class="absent-text">Absent</span>
+                {% endif %}
+            </p>
+
+            <div class="buttons">
+
+                <a href="/student/{{ std[0] }}" class="view-btn">
+                    View
+                </a>
+
+                <a href="/student/edit/{{ std[0] }}" class="update-btn">
+                    Update
+                </a>
+
+                <form action="/std/delete/{{ std[0] }}" method="post"
+                      onsubmit="return confirm('Are you sure you want to delete this student?');">
+
+                    <button type="submit" class="delete-btn">
+                        Delete
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+        {% else %}
+
+        <p class="empty">No students found!</p>
+
+        {% endfor %}
+
+    </div>
+
+</body>
+</html>
